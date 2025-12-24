@@ -136,6 +136,15 @@ namespace BulkCarnageIQ.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Instructions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRecipe")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PictureLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("GroupFoodItems");

@@ -7,12 +7,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BulkCarnageIQ.Core.Contracts;
 using BulkCarnageIQ.Infrastructure.Repositories;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddMudServices();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -45,6 +48,7 @@ builder.Services.AddScoped<IGroceryListService, GroceryListService>();
 builder.Services.AddScoped<IWeightLogService, WeightLogService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IGroupFoodService, GroupFoodService>();
+builder.Services.AddScoped<IEngineService, EngineService>();
 
 var app = builder.Build();
 
