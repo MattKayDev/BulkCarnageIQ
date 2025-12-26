@@ -4,6 +4,10 @@
 **Track. Stack. Dominate.**  
 No bullshit. No paywalls. Just straight-up tools to fuel your gains.
 
+## Key Differences from the Original
+This implementation of the app (Web only currently) uses SQLite instead of SQL Server. 
+This choice ensures cross-platform compatibility, as SQL Server is primarily Windows-centric, whereas SQLite provides a portable, local database solution that runs on any system without requiring external dependencies or environment changes.
+
 ---
 
 ## 🚀 What is BulkCarnageIQ?
