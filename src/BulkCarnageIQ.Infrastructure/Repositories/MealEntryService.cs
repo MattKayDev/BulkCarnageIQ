@@ -2,6 +2,7 @@
 using BulkCarnageIQ.Core.Carnage.Report;
 using BulkCarnageIQ.Core.Contracts;
 using BulkCarnageIQ.Infrastructure.Persistence;
+using BulkCarnageIQ.Infrastructure.ExternalServices;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,27 @@ namespace BulkCarnageIQ.Infrastructure.Repositories
     public class MealEntryService : IMealEntryService
     {
         private readonly AppDbContext _db;
+        private readonly FoodFinderService ffs;
 
         public MealEntryService(AppDbContext db)
         {
             _db = db;
+            this.ffs = new FoodFinderService(); // Should ideally be injected via DI
         }
 
         public async Task<FoodItem?> GetFoodItemByNameAsync(string foodName)
         {
-            return await _db.FoodItems
+            var foodItem = await _db.FoodItems
                 .Where(f => f.RecipeName.Equals(foodName))
                 .OrderBy(f => f.RecipeName)
                 .FirstOrDefaultAsync();
+
+            if (foodItem == null)
+            {
+                foodItem = await ffs.SearchFoodAsync(foodName);
+            }
+            
+            return foodItem;
         }
 
         public async Task<List<string>> SearchFoodNamesAsync(string query)
