@@ -29,9 +29,25 @@ builder.Services.AddAuthentication(options =>
     })
     .AddIdentityCookies();
 
+
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+// If the connection string uses a relative SQLite file path (e.g. "Data Source=app.db"),
+// make it absolute so the provider can open the file correctly in different working dirs.
+if (connectionString.StartsWith("Data Source=", StringComparison.OrdinalIgnoreCase))
+{
+    var ds = connectionString.Substring("Data Source=".Length).Trim();
+    if (!Path.IsPathRooted(ds))
+    {
+         var fullPath = Path.Combine(builder.Environment.ContentRootPath, ds);
+         connectionString = $"Data Source={fullPath}";
+     }
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+     options.UseSqlite(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -51,6 +67,34 @@ builder.Services.AddScoped<IGroupFoodService, GroupFoodService>();
 builder.Services.AddScoped<IEngineService, EngineService>();
 
 var app = builder.Build();
+
+
+// Ensure database is created / migrations applied at startup
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var db = services.GetRequiredService<AppDbContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        // Fallback for SQLite if migrations contain provider-specific SQL
+        var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger("Program");
+        logger.LogWarning(ex, "Migrate() failed; falling back to EnsureCreated().");
+        try
+        {
+            var db = services.GetRequiredService<AppDbContext>();
+            db.Database.EnsureCreated();
+        }
+        catch (Exception inner)
+        {
+            logger.LogError(inner, "Database initialization failed.");
+            throw;
+        }
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
