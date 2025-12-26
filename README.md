@@ -46,6 +46,26 @@ It’s **built for lifters, grinders, and tacticians** who want to cut the noise
 
 <img width="3019" height="2595" alt="BulkCarnageIQ-Mobile-Implemented" src="https://github.com/user-attachments/assets/8ee408a8-193d-468e-846b-67600774a995" />
 
+### Web
+<a href="https://github.com/user-attachments/assets/8c831f11-031a-4ff5-81a8-c8c42c493ab2">
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/8c831f11-031a-4ff5-81a8-c8c42c493ab2" />
+</a>
+
+<a href="https://github.com/user-attachments/assets/87059627-568e-438b-9b6e-60a35e3df6f2">
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/87059627-568e-438b-9b6e-60a35e3df6f2" />
+</a>
+
+<a href="https://github.com/user-attachments/assets/4eee2de5-8d61-48a3-9149-d2e3cc7ca388">
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/4eee2de5-8d61-48a3-9149-d2e3cc7ca388" />
+</a>
+
+<a href="https://github.com/user-attachments/assets/acc4424b-83ea-4d71-b5d1-315cd6fd574f">
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/acc4424b-83ea-4d71-b5d1-315cd6fd574f" />
+</a>
+
+
+
+
 ---
 
 ## 🛠️ Tech Stack
